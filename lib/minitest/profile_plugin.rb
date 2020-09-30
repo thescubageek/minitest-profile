@@ -31,12 +31,12 @@ module Minitest
 
     def report
       return unless passed?
-
-      puts "\n#{'=' * 80}"
-      puts "Your #{@count} Slowest Tests"
-      puts "#{'=' * 80}\n"
-
-      sorted_results[0, @count].each do |time, test_name|
+      puts
+      puts "=" * 80
+      puts "Your 25 Slowest Tests"
+      puts "=" * 80
+      puts
+      sorted_results[0, 25].each do |time, test_name|
         puts "#{sprintf("%7.4f",time)}ms - #{test_name}"
       end
     end
