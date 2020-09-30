@@ -4,11 +4,10 @@ module Minitest
   DEFAULT_TEST_COUNT = 25
 
   def self.plugin_profile_options(opts, options)
-    opts.on("--profile", "Display list of slowest tests") do |count|
+    opts.on("--profile", "Display list of slowest tests") do |p|
       options[:profile] = true
-      options[:count] = count
+      options[:count] ||= DEFAULT_TEST_COUNT
     end
-    options[:count] ||= DEFAULT_TEST_COUNT
   end
 
   def self.plugin_profile_init(options)
