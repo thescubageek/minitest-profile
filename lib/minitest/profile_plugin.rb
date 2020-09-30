@@ -1,12 +1,10 @@
 require 'minitest'
 
 module Minitest
-  DEFAULT_TEST_COUNT = 25
 
   def self.plugin_profile_options(opts, options)
     opts.on("--profile", "Display list of slowest tests") do |p|
       options[:profile] = true
-      options[:count] ||= DEFAULT_TEST_COUNT
     end
   end
 
@@ -15,18 +13,17 @@ module Minitest
   end
 
   class ProfileReporter < AbstractReporter
-    VERSION = "0.0.3"
+    VERSION = "0.0.2"
 
-    attr_accessor :io, :results, :count
+    attr_accessor :io, :results
 
     def initialize(options)
-      @io = options[:io]
-      @count = options[:count]
-      @results = []
+      self.io = options[:io]
+      self.results = []
     end
 
     def record(result)
-      @results << [result.time, result.location]
+      results << [result.time, result.location]
     end
 
     def report
@@ -36,9 +33,11 @@ module Minitest
       puts "Your 25 Slowest Tests"
       puts "=" * 80
       puts
-      sorted_results[0, 25].each do |time, test_name|
+      sorted_results[0,25].each do |time, test_name|
         puts "#{sprintf("%7.4f",time)}ms - #{test_name}"
       end
+
+      puts
     end
 
     def sorted_results
